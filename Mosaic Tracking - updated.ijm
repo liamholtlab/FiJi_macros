@@ -11,15 +11,15 @@ run("Bio-Formats Macro Extensions");
 list = getFileList(dir1);
 for (i=0; i<list.length; i++) 
 {
-    if (endsWith(list[i], ".tif")) 
+    if (endsWith(list[i], ".tif"))      // change here the file extension if you have other than .tif
     { 
     	Ext.openImagePlus(dir1+list[i]);
     	SingleParticleTracking();
     }
 }
 
-//all files set to run
-//need to check for when files are finished - rename them as needed
+// Removing the ".tif" from the file name
+
 for (i=0; i<list.length; i++) 
 {
     if (endsWith(list[i], ".tif")) 
@@ -32,11 +32,11 @@ for (i=0; i<list.length; i++)
 			wait(1000);
 		}
 		wait(1000);
-		s=File.rename(origFile, newFile);    /// IF FILE ALREADY EXISTS IT WON'T OVERWRITE!  TRY TO FIX ! 
+		s=File.rename(origFile, newFile);
 		
 		origFile = dir1 + "Traj_" + list[i] + ".txt";
 		newFile = dir2 + "Traj_" + replace(list[i], ".tif", ".txt");
-		// s=File.rename(origFile, newFile);    /// IF FILE ALREADY EXISTS IT WON'T OVERWRITE!  TRY TO FIX ! 
+		
     	
     }
 }
@@ -44,7 +44,7 @@ for (i=0; i<list.length; i++)
 function SingleParticleTracking() 
 {
 	//waitForUser("W1");	
-    run("Particle Tracker 2D/3D", "radius=3 cutoff=0 per/abs=0.5 link=1 displacement=6 dynamics=Brownian");
+    run("Particle Tracker 2D/3D", "radius=3 cutoff=0 per/abs=0.04 link=1 displacement=5 dynamics=Brownian");   // change the Mosaic Tracking parameters here
     //waitForUser("W2");
     run("Close All");
 }
